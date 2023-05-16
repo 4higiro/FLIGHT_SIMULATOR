@@ -3,7 +3,7 @@
 // Точка входа
 int main()
 {
-	// Инициализация GLFW c версией OpenGL 3.3 Core Profile
+	// Инициализация GLFW c версией OpenGL 3.3 Core Profile 
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
