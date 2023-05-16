@@ -1,24 +1,24 @@
-#ifndef ENGINE // Защита от повторного включения
+#ifndef ENGINE // Р—Р°С‰РёС‚Р° РѕС‚ РїРѕРІС‚РѕСЂРЅРѕРіРѕ РІРєР»СЋС‡РµРЅРёСЏ
 #define ENGINE
 
-// Макросы 
+// РњР°РєСЂРѕСЃС‹ 
 #define STB_IMAGE_IMPLEMENTATION
 
-// Включение библиотек
-#include <glad/glad.h>		// Поиск адресов хранения функций OpenGL
-#include <GLFW/glfw3.h>		// Фреймворк для работы с OpenGL
-#include <stb/stb_image.h>	// Загрузка изображений
+// Р’РєР»СЋС‡РµРЅРёРµ Р±РёР±Р»РёРѕС‚РµРє
+#include <glad/glad.h>		// РџРѕРёСЃРє Р°РґСЂРµСЃРѕРІ С…СЂР°РЅРµРЅРёСЏ С„СѓРЅРєС†РёР№ OpenGL
+#include <GLFW/glfw3.h>		// Р¤СЂРµР№РјРІРѕСЂРє РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ OpenGL
+#include <stb/stb_image.h>	// Р—Р°РіСЂСѓР·РєР° РёР·РѕР±СЂР°Р¶РµРЅРёР№
 
-#include <iostream>			// Ввод-вывод
-#include <fstream>			// Работа с файлами
-#include <string>			// Контейнер строки
-#include <vector>			// Контейнер динамического массива
+#include <iostream>			// Р’РІРѕРґ-РІС‹РІРѕРґ
+#include <fstream>			// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»Р°РјРё
+#include <string>			// РљРѕРЅС‚РµР№РЅРµСЂ СЃС‚СЂРѕРєРё
+#include <vector>			// РљРѕРЅС‚РµР№РЅРµСЂ РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ РјР°СЃСЃРёРІР°
 
-// Постоянные
+// РџРѕСЃС‚РѕСЏРЅРЅС‹Рµ
 #define WIN_WIDTH 1280
 #define WIN_HEIGHT 720
 
-// Переименование типов
+// РџРµСЂРµРёРјРµРЅРѕРІР°РЅРёРµ С‚РёРїРѕРІ
 typedef unsigned int Uint;
 typedef int Int;
 typedef size_t Size;
@@ -29,29 +29,29 @@ typedef char* Chars;
 typedef unsigned char Uchar;
 typedef unsigned char* Uchars;
 
-// Включение заголовочных файлов
-#include "transform.hpp"			// Матричные(-)векторные операции
-#include "counter.hpp"				// Объектная оболочка счетчика
-#include "camera.hpp"				// Работа с камерой
-#include "shaders.hpp"				// Работа с шейдерами и шейдерной программой
-#include "buffer_objects.hpp"		// Работа с буферными объектами
-#include "texture.hpp"				// Работа с текстурами
-#include "model.hpp"				// Работа с трехмерными моделями
+// Р’РєР»СЋС‡РµРЅРёРµ Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹С… С„Р°Р№Р»РѕРІ
+#include "transform.hpp"			// РњР°С‚СЂРёС‡РЅС‹Рµ(-)РІРµРєС‚РѕСЂРЅС‹Рµ РѕРїРµСЂР°С†РёРё
+#include "counter.hpp"				// РћР±СЉРµРєС‚РЅР°СЏ РѕР±РѕР»РѕС‡РєР° СЃС‡РµС‚С‡РёРєР°
+#include "camera.hpp"				// Р Р°Р±РѕС‚Р° СЃ РєР°РјРµСЂРѕР№
+#include "shaders.hpp"				// Р Р°Р±РѕС‚Р° СЃ С€РµР№РґРµСЂР°РјРё Рё С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјРѕР№
+#include "buffer_objects.hpp"		// Р Р°Р±РѕС‚Р° СЃ Р±СѓС„РµСЂРЅС‹РјРё РѕР±СЉРµРєС‚Р°РјРё
+#include "texture.hpp"				// Р Р°Р±РѕС‚Р° СЃ С‚РµРєСЃС‚СѓСЂР°РјРё
+#include "model.hpp"				// Р Р°Р±РѕС‚Р° СЃ С‚СЂРµС…РјРµСЂРЅС‹РјРё РјРѕРґРµР»СЏРјРё
 
-// engine - пространство имен проекта
+// engine - РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ РїСЂРѕРµРєС‚Р°
 
 namespace engine
 {
-	// Обработчик событий стандартной реализации летающей камеры
+	// РћР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёР№ СЃС‚Р°РЅРґР°СЂС‚РЅРѕР№ СЂРµР°Р»РёР·Р°С†РёРё Р»РµС‚Р°СЋС‰РµР№ РєР°РјРµСЂС‹
 	void flyCamera(GLFWwindow* window, const Vec3 angle)
 	{
-		// window - указатель на объект окна с контекстом OpenGL
-		// angle - поворот камеры в 3-х плоскостях
+		// window - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РѕР±СЉРµРєС‚ РѕРєРЅР° СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј OpenGL
+		// angle - РїРѕРІРѕСЂРѕС‚ РєР°РјРµСЂС‹ РІ 3-С… РїР»РѕСЃРєРѕСЃС‚СЏС…
 
-		// Создание обхекта камеры
+		// РЎРѕР·РґР°РЅРёРµ РѕР±С…РµРєС‚Р° РєР°РјРµСЂС‹
 		Camera* cam = Camera::getInstance();
 
-		// Перемещение камеры (Управление: A(влево) S(вправо) D(назад) W(вперед) Q(вверх) E(вниз))
+		// РџРµСЂРµРјРµС‰РµРЅРёРµ РєР°РјРµСЂС‹ (РЈРїСЂР°РІР»РµРЅРёРµ: A(РІР»РµРІРѕ) S(РІРїСЂР°РІРѕ) D(РЅР°Р·Р°Рґ) W(РІРїРµСЂРµРґ) Q(РІРІРµСЂС…) E(РІРЅРёР·))
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 			cam->move(Vec3(cam->direction().x * (-0.001f), 0.0f, cam->direction().z * (-0.001f)));
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -65,7 +65,7 @@ namespace engine
 		if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 			cam->move(Vec3(0.0f, -0.001f, 0.0f));
 
-		// Поворот камеры
+		// РџРѕРІРѕСЂРѕС‚ РєР°РјРµСЂС‹
 		cam->rotate(Vec3(rad(-angle.y) / 15.0f, rad(angle.x) / 15.0f, rad(angle.z) / 15.0f));
 	}
 }

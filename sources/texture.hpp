@@ -1,74 +1,74 @@
-#ifndef TEXTURE // Защита от повторного включения
+#ifndef TEXTURE // Р—Р°С‰РёС‚Р° РѕС‚ РїРѕРІС‚РѕСЂРЅРѕРіРѕ РІРєР»СЋС‡РµРЅРёСЏ
 #define TEXTURE
 
-#include "engine.hpp" // Включение всех заголовочных файлов
+#include "engine.hpp" // Р’РєР»СЋС‡РµРЅРёРµ РІСЃРµС… Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹С… С„Р°Р№Р»РѕРІ
 
-// engine - пространство имен проекта
+// engine - РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ РїСЂРѕРµРєС‚Р°
 
 namespace engine
 {
-	// Класс двумерной текстуры
+	// РљР»Р°СЃСЃ РґРІСѓРјРµСЂРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹
 	class Texture2D
 	{
 	private:
-		mutable Uint id = 0U; // Идентификатор текстуры
+		mutable Uint id = 0U; // РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С‚РµРєСЃС‚СѓСЂС‹
 
-		// Запрещено копировать и перезаписывать текстуру
+		// Р—Р°РїСЂРµС‰РµРЅРѕ РєРѕРїРёСЂРѕРІР°С‚СЊ Рё РїРµСЂРµР·Р°РїРёСЃС‹РІР°С‚СЊ С‚РµРєСЃС‚СѓСЂСѓ
 		Texture2D(const Texture2D& other) {}
 		Texture2D& operator=(const Texture2D& other) {}
 
-		friend class Model; // Закрытые поля и методы доступны в классе Model
+		friend class Model; // Р—Р°РєСЂС‹С‚С‹Рµ РїРѕР»СЏ Рё РјРµС‚РѕРґС‹ РґРѕСЃС‚СѓРїРЅС‹ РІ РєР»Р°СЃСЃРµ Model
 	public:
-		// Отвязка текстуры от контекста OpenGL
+		// РћС‚РІСЏР·РєР° С‚РµРєСЃС‚СѓСЂС‹ РѕС‚ РєРѕРЅС‚РµРєСЃС‚Р° OpenGL
 		static void resetBind()
 		{
 			glBindTexture(GL_TEXTURE_2D, 0U);
 		}
 
-		// Создание текстуры
+		// РЎРѕР·РґР°РЅРёРµ С‚РµРєСЃС‚СѓСЂС‹
 		Texture2D()
 		{
 			glGenTextures(1, &id);
 		}
 
-		// Геттер идентификатора текстуры
+		// Р“РµС‚С‚РµСЂ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР° С‚РµРєСЃС‚СѓСЂС‹
 		Uint getID() const
 		{
 			return id;
 		}
 
-		// Установка дефолтных параметров рисования текстуры
+		// РЈСЃС‚Р°РЅРѕРІРєР° РґРµС„РѕР»С‚РЅС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ СЂРёСЃРѕРІР°РЅРёСЏ С‚РµРєСЃС‚СѓСЂС‹
 		void setConfig(Int mode, Int filtration)
 		{
-			// mode			- режим рисования полигона за предлами текстурных координат 
-			// filtration	- режим определения цвета текселя
+			// mode			- СЂРµР¶РёРј СЂРёСЃРѕРІР°РЅРёСЏ РїРѕР»РёРіРѕРЅР° Р·Р° РїСЂРµРґР»Р°РјРё С‚РµРєСЃС‚СѓСЂРЅС‹С… РєРѕРѕСЂРґРёРЅР°С‚ 
+			// filtration	- СЂРµР¶РёРј РѕРїСЂРµРґРµР»РµРЅРёСЏ С†РІРµС‚Р° С‚РµРєСЃРµР»СЏ
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, mode);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mode);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filtration);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filtration);
 		}
 
-		// Связывание текстуры с контекстом OpenGL
+		// РЎРІСЏР·С‹РІР°РЅРёРµ С‚РµРєСЃС‚СѓСЂС‹ СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј OpenGL
 		void bind() const
 		{
 			glBindTexture(GL_TEXTURE_2D, id);
 		}
 
-		// Загрузка текстуры из файла
+		// Р—Р°РіСЂСѓР·РєР° С‚РµРєСЃС‚СѓСЂС‹ РёР· С„Р°Р№Р»Р°
 		void load(std::string path)
 		{
-			// path - путь к текстуре
+			// path - РїСѓС‚СЊ Рє С‚РµРєСЃС‚СѓСЂРµ
 			Int texture_width, texture_height, texture_channels;
 			Uchars texture_data = stbi_load(path.c_str(), &texture_width, &texture_height, &texture_channels, 0);
 			Int color_space = GL_RGBA;
 			if (texture_channels < 4)
-				color_space = GL_RGB; // Если кол-во каналов изображения меньше 4-х, то альфа канал не записывается
+				color_space = GL_RGB; // Р•СЃР»Рё РєРѕР»-РІРѕ РєР°РЅР°Р»РѕРІ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РјРµРЅСЊС€Рµ 4-С…, С‚Рѕ Р°Р»СЊС„Р° РєР°РЅР°Р» РЅРµ Р·Р°РїРёСЃС‹РІР°РµС‚СЃСЏ
 			glTexImage2D(GL_TEXTURE_2D, 0, color_space, texture_width, texture_height, 0, color_space, GL_UNSIGNED_BYTE, (void*)(texture_data));
 			glGenerateMipmap(GL_TEXTURE_2D);
 			stbi_image_free(texture_data);
 		}
 
-		// Очистка текстуры
+		// РћС‡РёСЃС‚РєР° С‚РµРєСЃС‚СѓСЂС‹
 		void clear()
 		{
 			if (id != 0U)
@@ -78,7 +78,7 @@ namespace engine
 			}
 		}
 
-		// Уничтожение текстуры
+		// РЈРЅРёС‡С‚РѕР¶РµРЅРёРµ С‚РµРєСЃС‚СѓСЂС‹
 		~Texture2D()
 		{
 			clear();

@@ -1,132 +1,132 @@
-#ifndef TRANSFORM // Защита от повторного включения
+#ifndef TRANSFORM // Р—Р°С‰РёС‚Р° РѕС‚ РїРѕРІС‚РѕСЂРЅРѕРіРѕ РІРєР»СЋС‡РµРЅРёСЏ
 #define TRANSFORM
 
-#include "engine.hpp" // Включение всех заголовочных файлов
+#include "engine.hpp" // Р’РєР»СЋС‡РµРЅРёРµ РІСЃРµС… Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹С… С„Р°Р№Р»РѕРІ
 
-// engine - пространство имен проекта
+// engine - РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ РїСЂРѕРµРєС‚Р°
 
 namespace engine
 {
-	// Структура двумерного вектоар
+	// РЎС‚СЂСѓРєС‚СѓСЂР° РґРІСѓРјРµСЂРЅРѕРіРѕ РІРµРєС‚РѕР°СЂ
 	struct Vec2
 	{
-		Float x, y;	// Кординаты двумерного вектора
+		Float x, y;	// РљРѕСЂРґРёРЅР°С‚С‹ РґРІСѓРјРµСЂРЅРѕРіРѕ РІРµРєС‚РѕСЂР°
 
-		// Конструкторы
+		// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 		Vec2() { x = 0.0f; y = 0.0f; }
 		Vec2(Float value) : x(value), y(value) {}
 		Vec2(Float _x, Float _y) : x(_x), y(_y) {}
 
-		// Перегруженные операторы
+		// РџРµСЂРµРіСЂСѓР¶РµРЅРЅС‹Рµ РѕРїРµСЂР°С‚РѕСЂС‹
 		Vec2 operator+(const Vec2& other) const { return Vec2(x + other.x, y + other.y); }
 		Vec2 operator-(const Vec2& other) const { return Vec2(x - other.x, y - other.y); }
 		Vec2 operator*(const Vec2& other) const { return Vec2(x * other.x, y * other.y); }
 		Vec2 operator/(const Vec2& other) const { return Vec2(x / other.x, y / other.y); }
 	};
 
-	// Структуры трехмерного вектора
+	// РЎС‚СЂСѓРєС‚СѓСЂС‹ С‚СЂРµС…РјРµСЂРЅРѕРіРѕ РІРµРєС‚РѕСЂР°
 	struct Vec3
 	{
-		Float x, y, z; // Координаты
+		Float x, y, z; // РљРѕРѕСЂРґРёРЅР°С‚С‹
 
-		// Конструкторы
+		// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 		Vec3() { x = 0.0f; y = 0.0f; z = 0.0f; }
 		Vec3(Float value) : x(value), y(value), z(value) {}
 		Vec3(Float _x, Float _y, Float _z) : x(_x), y(_y), z(_z) {}
 		Vec3(Vec2 xy, Float _z) : x(xy.x), y(xy.y), z(_z) {}
 
-		// Перегруженные операторы
+		// РџРµСЂРµРіСЂСѓР¶РµРЅРЅС‹Рµ РѕРїРµСЂР°С‚РѕСЂС‹
 		Vec3 operator+(const Vec3& other) const { return Vec3(x + other.x, y + other.y, z + other.z); }
 		Vec3 operator-(const Vec3& other) const { return Vec3(x - other.x, y - other.y, z - other.z); }
 		Vec3 operator*(const Vec3& other) const { return Vec3(x * other.x, y * other.y, z * other.z); }
 		Vec3 operator/(const Vec3& other) const { return Vec3(x / other.x, y / other.y, z / other.z); }
 	};
 
-	// Структура четырехмерного вектора
+	// РЎС‚СЂСѓРєС‚СѓСЂР° С‡РµС‚С‹СЂРµС…РјРµСЂРЅРѕРіРѕ РІРµРєС‚РѕСЂР°
 	struct Vec4
 	{
-		Float x, y, z, w; // Координаты
+		Float x, y, z, w; // РљРѕРѕСЂРґРёРЅР°С‚С‹
 
-		// Конструкторы
+		// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 		Vec4() { x = 0.0f; y = 0.0f; z = 0.0f; w = 0.0f; }
 		Vec4(Float value) : x(value), y(value), z(value), w(value) {}
 		Vec4(Float _x, Float _y, Float _z, Float _w) : x(_x), y(_y), z(_z), w(_w) {}
 		Vec4(Vec3 xyz, Float _w) : x(xyz.x), y(xyz.y), z(xyz.z), w(_w) {}
 
-		// Перегруженные операторы
+		// РџРµСЂРµРіСЂСѓР¶РµРЅРЅС‹Рµ РѕРїРµСЂР°С‚РѕСЂС‹
 		Vec4 operator+(const Vec4& other) const { return Vec4(x + other.x, y + other.y, z + other.z, w + other.w); }
 		Vec4 operator-(const Vec4& other) const { return Vec4(x - other.x, y - other.y, z - other.z, w - other.w); }
 		Vec4 operator*(const Vec4& other) const { return Vec4(x * other.x, y * other.y, z * other.z, w * other.w); }
 		Vec4 operator/(const Vec4& other) const { return Vec4(x / other.x, y / other.y, z / other.z, w / other.w); }
 	};
 
-	// Понижение размерности вектора (отсечение последней координаты)
+	// РџРѕРЅРёР¶РµРЅРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё РІРµРєС‚РѕСЂР° (РѕС‚СЃРµС‡РµРЅРёРµ РїРѕСЃР»РµРґРЅРµР№ РєРѕРѕСЂРґРёРЅР°С‚С‹)
 	Vec2 low(Vec3 v)
 	{
 		return Vec2(v.x, v.y);
 	}
 
-	// Понижение размерности вектора (отсечение последней координаты)
+	// РџРѕРЅРёР¶РµРЅРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё РІРµРєС‚РѕСЂР° (РѕС‚СЃРµС‡РµРЅРёРµ РїРѕСЃР»РµРґРЅРµР№ РєРѕРѕСЂРґРёРЅР°С‚С‹)
 	Vec3 low(Vec4 v)
 	{
 		return Vec3(v.x, v.y, v.z);
 	}
 
-	// Скалярное произведение
+	// РЎРєР°Р»СЏСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
 	Float dot(Vec2 v1, Vec2 v2)
 	{
 		return v1.x * v2.x + v1.y * v2.y;
 	}
 
-	// Скалярное произведение
+	// РЎРєР°Р»СЏСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
 	Float dot(Vec3 v1, Vec3 v2)
 	{
 		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 	}
 
-	// Скалярное произведение
+	// РЎРєР°Р»СЏСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
 	Float dot(Vec4 v1, Vec4 v2)
 	{
 		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w;
 	}
 
-	// Вычисление длины вектора
+	// Р’С‹С‡РёСЃР»РµРЅРёРµ РґР»РёРЅС‹ РІРµРєС‚РѕСЂР°
 	Float length(Vec2 v)
 	{
 		return sqrt(v.x * v.x + v.y * v.y);
 	}
 
-	// Вычисление длины вектоар
+	// Р’С‹С‡РёСЃР»РµРЅРёРµ РґР»РёРЅС‹ РІРµРєС‚РѕР°СЂ
 	Float length(Vec3 v)
 	{
 		return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 	}
 
-	// Вычисление длины вектора
+	// Р’С‹С‡РёСЃР»РµРЅРёРµ РґР»РёРЅС‹ РІРµРєС‚РѕСЂР°
 	Float length(Vec4 v)
 	{
 		return sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
 	}
 
-	// Нормализация вектора
+	// РќРѕСЂРјР°Р»РёР·Р°С†РёСЏ РІРµРєС‚РѕСЂР°
 	Vec2 normalize(Vec2 v)
 	{
 		return v / Vec2(length(v));
 	}
 
-	// Нормализация вектора
+	// РќРѕСЂРјР°Р»РёР·Р°С†РёСЏ РІРµРєС‚РѕСЂР°
 	Vec3 normalize(Vec3 v)
 	{
 		return v / Vec3(length(v));
 	}
 
-	// Нормализация вектора
+	// РќРѕСЂРјР°Р»РёР·Р°С†РёСЏ РІРµРєС‚РѕСЂР°
 	Vec4 normalize(Vec4 v)
 	{
 		return v / Vec4(length(v));
 	}
 
-	// Векторное произведение
+	// Р’РµРєС‚РѕСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
 	Vec2 croos(Vec2 v)
 	{
 		Vec2 result;
@@ -135,7 +135,7 @@ namespace engine
 		return result;
 	}
 
-	// Векторное произведение
+	// Р’РµРєС‚РѕСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
 	Vec3 cross(Vec3 v1, Vec3 v2)
 	{
 		Vec3 result;
@@ -145,7 +145,7 @@ namespace engine
 		return result;
 	}
 
-	// Векторное произведение
+	// Р’РµРєС‚РѕСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
 	Vec4 cross(Vec4 v1, Vec4 v2, Vec4 v3)
 	{
 		Vec4 result;
@@ -156,7 +156,7 @@ namespace engine
 		return result;
 	}
 
-	// Матричное произведение
+	// РњР°С‚СЂРёС‡РЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
 	Float* multipleMat(Float* a, Float* b, Size n)
 	{
 		Float* c = new Float[n * n];
@@ -173,23 +173,23 @@ namespace engine
 		return c;
 	}
 
-	// Структура матрицы 2х2
+	// РЎС‚СЂСѓРєС‚СѓСЂР° РјР°С‚СЂРёС†С‹ 2С…2
 	struct Mat2
 	{
-		Vec2 i, j; // Вектор-столбцы
+		Vec2 i, j; // Р’РµРєС‚РѕСЂ-СЃС‚РѕР»Р±С†С‹
 
-		// Конструкторы
+		// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 		Mat2() { i = Vec2(1.0f, 0.0f); j = Vec2(0.0f, 1.0f); }
 		Mat2(Vec2 _i, Vec2 _j) : i(_i), j(_j) {}
 		Mat2(Float* ptr) { i = Vec2(ptr[0Ull], ptr[2Ull]); j = Vec2(ptr[1Ull], ptr[3Ull]); }
 
-		// Перегруженные операторы
+		// РџРµСЂРµРіСЂСѓР¶РµРЅРЅС‹Рµ РѕРїРµСЂР°С‚РѕСЂС‹
 		Mat2 operator+(const Mat2& other) const { return Mat2(i + other.i, j + other.j); }
 		Mat2 operator-(const Mat2& other) const { return Mat2(i - other.i, j - other.j); }
 		Mat2 operator*(Float scalar) const { return Mat2(i * scalar, j * scalar); }
 		Vec2 operator*(const Vec2& v) const { return Vec2(v.x * i.x + v.y * j.x, v.x * i.y + v.y * j.y); }
 
-		// Матричное произведение
+		// РњР°С‚СЂРёС‡РЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
 		Mat2 operator*(const Mat2& other) const 
 		{ 
 			Float this_ptr[4Ull] = {
@@ -207,24 +207,24 @@ namespace engine
 		}
 	};
 
-	// Структура матрицы 3х3
+	// РЎС‚СЂСѓРєС‚СѓСЂР° РјР°С‚СЂРёС†С‹ 3С…3
 	struct Mat3
 	{
-		Vec3 i, j, k; // Вектор-столбцы
+		Vec3 i, j, k; // Р’РµРєС‚РѕСЂ-СЃС‚РѕР»Р±С†С‹
 
-		// Конструкторы
+		// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 		Mat3() { i = Vec3(1.0f, 0.0f, 0.0f); j = Vec3(0.0f, 1.0f, 0.0f); k = Vec3(0.0f, 0.0f, 1.0f); }
 		Mat3(Vec3 _i, Vec3 _j, Vec3 _k) : i(_i), j(_j), k(_k) {}
 		Mat3(Float* ptr) { i = Vec3(ptr[0Ull], ptr[3Ull], ptr[6Ull]); j = Vec3(ptr[1Ull], ptr[4Ull], ptr[7Ull]); k = Vec3(ptr[2Ull], ptr[5Ull], ptr[8Ull]); }
 		Mat3(Mat2 m, Vec2 v) : i(Vec3(m.i, 0.0f)), j(Vec3(m.j, 0.0f)), k(Vec3(v, 1.0f)) {}
 
-		// Перегруженные операторы
+		// РџРµСЂРµРіСЂСѓР¶РµРЅРЅС‹Рµ РѕРїРµСЂР°С‚РѕСЂС‹
 		Mat3 operator+(const Mat3& other) const { return Mat3(i + other.i, j + other.j, k + other.k); }
 		Mat3 operator-(const Mat3& other) const { return Mat3(i - other.i, j - other.j, k - other.k); }
 		Mat3 operator*(Float scalar) const { return Mat3(i * scalar, j * scalar, k * scalar); }
 		Vec3 operator*(const Vec3& v) const { return Vec3(v.x * i.x + v.y * j.x + v.z * k.x, v.x * i.y + v.y * j.y + v.z * k.y, v.x * i.z + v.y * j.z + v.z * k.z); }
 
-		// Матричное произведение
+		// РњР°С‚СЂРёС‡РЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
 		Mat3 operator*(const Mat3& other) const
 		{
 			Float this_ptr[9Ull] = {
@@ -244,24 +244,24 @@ namespace engine
 		}
 	};
 
-	// Структура матрицы 4х4
+	// РЎС‚СЂСѓРєС‚СѓСЂР° РјР°С‚СЂРёС†С‹ 4С…4
 	struct Mat4
 	{
-		Vec4 i, j, k, l; // Вектор-столбцы
+		Vec4 i, j, k, l; // Р’РµРєС‚РѕСЂ-СЃС‚РѕР»Р±С†С‹
 
-		// Конструкторы
+		// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 		Mat4() { i = Vec4(1.0f, 0.0f, 0.0f, 0.0f); j = Vec4(0.0f, 1.0f, 0.0f, 0.0f); k = Vec4(0.0f, 0.0f, 1.0f, 0.0f); l = Vec4(0.0f, 0.0f, 0.0f, 1.0f); }
 		Mat4(Vec4 _i, Vec4 _j, Vec4 _k, Vec4 _l) : i(_i), j(_j), k(_k), l(_l) {}
 		Mat4(Float* ptr) { i = Vec4(ptr[0Ull], ptr[4Ull], ptr[8Ull], ptr[12Ull]); j = Vec4(ptr[1Ull], ptr[5Ull], ptr[9Ull], ptr[13Ull]); k = Vec4(ptr[2Ull], ptr[6Ull], ptr[10Ull], ptr[14Ull]); l = Vec4(ptr[3Ull], ptr[7Ull], ptr[11Ull], ptr[15Ull]); }
 		Mat4(Mat3 m, Vec3 v) : i(Vec4(m.i, 0.0f)), j(Vec4(m.j, 0.0f)), k(Vec4(m.k, 0.0f)), l(Vec4(v, 1.0f)) {}
 
-		// Перегруженные операторы
+		// РџРµСЂРµРіСЂСѓР¶РµРЅРЅС‹Рµ РѕРїРµСЂР°С‚РѕСЂС‹
 		Mat4 operator+(const Mat4& other) const { return Mat4(i + other.i, j + other.j, k + other.k, l + other.l); }
 		Mat4 operator-(const Mat4& other) const { return Mat4(i - other.i, j - other.j, k - other.k, l - other.l); }
 		Mat4 operator*(Float scalar) const { return Mat4(i * scalar, j * scalar, k * scalar, l * scalar); }
 		Vec4 operator*(const Vec4& v) const { return Vec4(v.x * i.x + v.y * j.x + v.z * k.x + v.w * l.x, v.x * i.y + v.y * j.y + v.z * k.y + v.w * l.y, v.x * i.z + v.y * j.z + v.z * k.z + v.w * l.z, v.x * i.w + v.y * j.w + v.z * k.w + v.w * l.w); }
 
-		// Матричное произведение
+		// РњР°С‚СЂРёС‡РЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
 		Mat4 operator*(const Mat4& other) const 
 		{
 			Float this_ptr[16Ull] = {
@@ -283,25 +283,25 @@ namespace engine
 		}
 	};
 
-	// Понижение размерности матрицы (отсечение последних строки и стобца)
+	// РџРѕРЅРёР¶РµРЅРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё РјР°С‚СЂРёС†С‹ (РѕС‚СЃРµС‡РµРЅРёРµ РїРѕСЃР»РµРґРЅРёС… СЃС‚СЂРѕРєРё Рё СЃС‚РѕР±С†Р°)
 	Mat2 low(Mat3 m)
 	{
 		return Mat2(low(m.i), low(m.j));
 	}
 
-	// Понижение размерности матрицы (отсечение последних строки и стобца)
+	// РџРѕРЅРёР¶РµРЅРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё РјР°С‚СЂРёС†С‹ (РѕС‚СЃРµС‡РµРЅРёРµ РїРѕСЃР»РµРґРЅРёС… СЃС‚СЂРѕРєРё Рё СЃС‚РѕР±С†Р°)
 	Mat3 low(Mat4 m)
 	{
 		return Mat3(low(m.i), low(m.j), low(m.k));
 	}
 
-	// Вычисление определителя матрицы
+	// Р’С‹С‡РёСЃР»РµРЅРёРµ РѕРїСЂРµРґРµР»РёС‚РµР»СЏ РјР°С‚СЂРёС†С‹
 	Float det(Mat2 m)
 	{
 		return m.i.x * m.j.y - m.j.x * m.i.y;
 	}
 
-	// Вычисление определителя матрицы
+	// Р’С‹С‡РёСЃР»РµРЅРёРµ РѕРїСЂРµРґРµР»РёС‚РµР»СЏ РјР°С‚СЂРёС†С‹
 	Float det(Mat3 m)
 	{
 		Float a[4Ull] = {
@@ -320,7 +320,7 @@ namespace engine
 		return m.i.x * det(mat_a) - m.j.x * det(mat_b) + m.k.x * det(mat_c);
 	}
 
-	// Вычисление определителя матрицы
+	// Р’С‹С‡РёСЃР»РµРЅРёРµ РѕРїСЂРµРґРµР»РёС‚РµР»СЏ РјР°С‚СЂРёС†С‹
 	Float det(Mat4 m)
 	{
 		Float a[9Ull] = {
@@ -347,7 +347,7 @@ namespace engine
 		return m.i.x * det(mat_a) - m.j.x * det(mat_b) + m.k.x * det(mat_c) - m.l.x * det(mat_d);
 	}
 
-	// Тринспонирование матрицы
+	// РўСЂРёРЅСЃРїРѕРЅРёСЂРѕРІР°РЅРёРµ РјР°С‚СЂРёС†С‹
 	Mat2 transpon(Mat2 m)
 	{
 		Float t[4Ull] = {
@@ -357,7 +357,7 @@ namespace engine
 		return t;
 	}
 
-	// Тринспонирование матрицы
+	// РўСЂРёРЅСЃРїРѕРЅРёСЂРѕРІР°РЅРёРµ РјР°С‚СЂРёС†С‹
 	Mat3 transpon(Mat3 m)
 	{
 		Float t[9Ull] = {
@@ -368,7 +368,7 @@ namespace engine
 		return t;
 	}
 
-	// Тринспонирование матрицы
+	// РўСЂРёРЅСЃРїРѕРЅРёСЂРѕРІР°РЅРёРµ РјР°С‚СЂРёС†С‹
 	Mat4 transpon(Mat4 m)
 	{
 		Float t[16Ull] = {
@@ -380,13 +380,13 @@ namespace engine
 		return t;
 	}
 
-	// Конвертация углов в радианы
+	// РљРѕРЅРІРµСЂС‚Р°С†РёСЏ СѓРіР»РѕРІ РІ СЂР°РґРёР°РЅС‹
 	Float rad(Float angle)
 	{
 		return angle * (acos(-1.0f) / 180.0f);
 	}
 
-	// Создание матрицы поворота на плоскости
+	// РЎРѕР·РґР°РЅРёРµ РјР°С‚СЂРёС†С‹ РїРѕРІРѕСЂРѕС‚Р° РЅР° РїР»РѕСЃРєРѕСЃС‚Рё
 	Mat2 rotate(Float angle)
 	{
 		Float m[4Ull] = {
@@ -396,7 +396,7 @@ namespace engine
 		return m;
 	}
 
-	// Создание матрицы поворота вокруг заданной оси на заданный угол в пространстве
+	// РЎРѕР·РґР°РЅРёРµ РјР°С‚СЂРёС†С‹ РїРѕРІРѕСЂРѕС‚Р° РІРѕРєСЂСѓРі Р·Р°РґР°РЅРЅРѕР№ РѕСЃРё РЅР° Р·Р°РґР°РЅРЅС‹Р№ СѓРіРѕР» РІ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРµ
 	Mat3 rotate(Vec3 axis, Float angle)
 	{
 		Float m[9Ull] = {
@@ -428,7 +428,7 @@ namespace engine
 		return m;
 	}
 
-	// Создание матрицы масштабирования по осям
+	// РЎРѕР·РґР°РЅРёРµ РјР°С‚СЂРёС†С‹ РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёСЏ РїРѕ РѕСЃСЏРј
 	Mat2 scale(Vec2 scalars)
 	{
 		Float m[4Ull] = {
@@ -438,7 +438,7 @@ namespace engine
 		return m;
 	}
 
-	// Создание матрицы масштабирования по осям
+	// РЎРѕР·РґР°РЅРёРµ РјР°С‚СЂРёС†С‹ РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёСЏ РїРѕ РѕСЃСЏРј
 	Mat3 scale(Vec3 scalars)
 	{
 		Float m[9Ull] = {
@@ -449,7 +449,7 @@ namespace engine
 		return m;
 	}
 
-	// Создание матрицы масштабирования по осям
+	// РЎРѕР·РґР°РЅРёРµ РјР°С‚СЂРёС†С‹ РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёСЏ РїРѕ РѕСЃСЏРј
 	Mat4 scale(Vec4 scalars)
 	{
 		Float m[16Ull] = {
@@ -461,7 +461,7 @@ namespace engine
 		return m;
 	}
 
-	// Создание матрицы перемещения
+	// РЎРѕР·РґР°РЅРёРµ РјР°С‚СЂРёС†С‹ РїРµСЂРµРјРµС‰РµРЅРёСЏ
 	Mat3 move(Vec2 bias)
 	{
 		Vec3 i = Vec3(1.0f, 0.0f, 0.0f);
@@ -470,7 +470,7 @@ namespace engine
 		return Mat3(i, j, k);
 	}
 
-	// Создание матрицы перемещения
+	// РЎРѕР·РґР°РЅРёРµ РјР°С‚СЂРёС†С‹ РїРµСЂРµРјРµС‰РµРЅРёСЏ
 	Mat4 move(Vec3 bias)
 	{
 		Vec4 i = Vec4(1.0f, 0.0f, 0.0f, 0.0f);
@@ -480,7 +480,7 @@ namespace engine
 		return Mat4(i, j, k, l);
 	}
 
-	// Создание матрицы перспективной проекции
+	// РЎРѕР·РґР°РЅРёРµ РјР°С‚СЂРёС†С‹ РїРµСЂСЃРїРµРєС‚РёРІРЅРѕР№ РїСЂРѕРµРєС†РёРё
 	Mat4 perspective(Float n, Float f, Float fov, Int width, Int height)
 	{
 		Float t = n * tan(fov / 2.0f);
@@ -495,7 +495,7 @@ namespace engine
 		return m;
 	}
 
-	// Запись данных по заданному адресу
+	// Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ Р°РґСЂРµСЃСѓ
 	void ptr(Vec2 v, Float* data)
 	{
 		Float arr[2Ull] = { v.x, v.y };
@@ -503,7 +503,7 @@ namespace engine
 			data[i] = arr[i];
 	}
 
-	// Запись данных по заданному адресу
+	// Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ Р°РґСЂРµСЃСѓ
 	void ptr(Vec3 v, Float* data)
 	{
 		Float arr[3Ull] = { v.x, v.y, v.z };
@@ -511,7 +511,7 @@ namespace engine
 			data[i] = arr[i];
 	}
 
-	// Запись данных по заданному адресу
+	// Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ Р°РґСЂРµСЃСѓ
 	void ptr(Vec4 v, Float* data)
 	{
 		Float arr[4Ull] = { v.x, v.y, v.z, v.w };
@@ -519,7 +519,7 @@ namespace engine
 			data[i] = arr[i];
 	}
 
-	// Запись данных по заданному адресу
+	// Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ Р°РґСЂРµСЃСѓ
 	void ptr(Mat2 m, Float* data)
 	{
 		Float arr[4Ull] = { 
@@ -530,7 +530,7 @@ namespace engine
 			data[i] = arr[i];
 	}
 
-	// Запись данных по заданному адресу
+	// Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ Р°РґСЂРµСЃСѓ
 	void ptr(Mat3 m, Float* data)
 	{
 		Float arr[9Ull] = {
@@ -542,7 +542,7 @@ namespace engine
 			data[i] = arr[i];
 	}
 
-	// Запись данных по заданному адресу
+	// Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ Р°РґСЂРµСЃСѓ
 	void ptr(Mat4 m, Float* data)
 	{
 		Float arr[16Ull] = {

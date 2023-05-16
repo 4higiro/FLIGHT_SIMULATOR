@@ -1,17 +1,17 @@
-#ifndef SHADERS // Защита от повторного включения
+#ifndef SHADERS // Р—Р°С‰РёС‚Р° РѕС‚ РїРѕРІС‚РѕСЂРЅРѕРіРѕ РІРєР»СЋС‡РµРЅРёСЏ
 #define SHADERS
 
-#include "engine.hpp" // Включение всех заголовочных файлов
+#include "engine.hpp" // Р’РєР»СЋС‡РµРЅРёРµ РІСЃРµС… Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹С… С„Р°Р№Р»РѕРІ
 
-// engine - пространство имен проекта
+// engine - РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ РїСЂРѕРµРєС‚Р°
 
 namespace engine
 {
-	// Загрузка исходного кода шейдеров из файла
+	// Р—Р°РіСЂСѓР·РєР° РёСЃС…РѕРґРЅРѕРіРѕ РєРѕРґР° С€РµР№РґРµСЂРѕРІ РёР· С„Р°Р№Р»Р°
 	void loadShaderSource(std::string path, char*& shader_source)
 	{
-		// path			 - путь к файлу с исходным кодом
-		// shader_source - адрес записи исходного кода
+		// path			 - РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃ РёСЃС…РѕРґРЅС‹Рј РєРѕРґРѕРј
+		// shader_source - Р°РґСЂРµСЃ Р·Р°РїРёСЃРё РёСЃС…РѕРґРЅРѕРіРѕ РєРѕРґР°
 		std::ifstream fin;
 		fin.open(path);
 		std::string input_source;
@@ -23,38 +23,38 @@ namespace engine
 		fin.close();
 	}
 
-	// Класс Шейдера
+	// РљР»Р°СЃСЃ РЁРµР№РґРµСЂР°
 	class Shader
 	{
 	private:
-		Uint id = 0U; // Идентификатор шейдера
+		Uint id = 0U; // РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С€РµР№РґРµСЂР°
 
-		// Запрещено копирование и перезапись шейдера
+		// Р—Р°РїСЂРµС‰РµРЅРѕ РєРѕРїРёСЂРѕРІР°РЅРёРµ Рё РїРµСЂРµР·Р°РїРёСЃСЊ С€РµР№РґРµСЂР°
 		Shader(const Shader& other) {}
 		Shader& operator=(const Shader& other) {}
 	public:
-		// Создание шейдера
+		// РЎРѕР·РґР°РЅРёРµ С€РµР№РґРµСЂР°
 		Shader(Uint type) 
 		{
 			id = glCreateShader(type);
 		}
 
-		// Геттер идентификатора шейдера
+		// Р“РµС‚С‚РµСЂ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР° С€РµР№РґРµСЂР°
 		Uint getID() const
 		{
 			return id;
 		}
 
-		// Запись исходного кода шейдера
+		// Р—Р°РїРёСЃСЊ РёСЃС…РѕРґРЅРѕРіРѕ РєРѕРґР° С€РµР№РґРµСЂР°
 		void changeSource(const char* source)
 		{
 			glShaderSource(id, 1, &source, NULL);
 		}
 
-		// Компиляция исходного кода шейдера
+		// РљРѕРјРїРёР»СЏС†РёСЏ РёСЃС…РѕРґРЅРѕРіРѕ РєРѕРґР° С€РµР№РґРµСЂР°
 		bool compile(Char info_log[512])
 		{
-			// info_log - информация об ошибках компиляции (так же возвращает статус компиляции)
+			// info_log - РёРЅС„РѕСЂРјР°С†РёСЏ РѕР± РѕС€РёР±РєР°С… РєРѕРјРїРёР»СЏС†РёРё (С‚Р°Рє Р¶Рµ РІРѕР·РІСЂР°С‰Р°РµС‚ СЃС‚Р°С‚СѓСЃ РєРѕРјРїРёР»СЏС†РёРё)
 			glCompileShader(id);
 			Int success = 0;
 			glGetShaderiv(id, GL_COMPILE_STATUS, &success);
@@ -63,7 +63,7 @@ namespace engine
 			return static_cast<bool>(success);
 		}
 
-		// Очистка шейдера
+		// РћС‡РёСЃС‚РєР° С€РµР№РґРµСЂР°
 		void clear()
 		{
 			if (id != 0U)
@@ -73,43 +73,43 @@ namespace engine
 			}
 		}
 
-		// Уничтожение шейдера
+		// РЈРЅРёС‡С‚РѕР¶РµРЅРёРµ С€РµР№РґРµСЂР°
 		~Shader()
 		{
 			clear();
 		}
 	};
 
-	// Класс Шейдерной программы 
+	// РљР»Р°СЃСЃ РЁРµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹ 
 	class ShaderProgram
 	{
 	private:
-		Uint id = 0U; // Идентификатор шейдерной программы
+		Uint id = 0U; // РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹
 
-		// Запрещено копирование и перезапись шейдерной программы
+		// Р—Р°РїСЂРµС‰РµРЅРѕ РєРѕРїРёСЂРѕРІР°РЅРёРµ Рё РїРµСЂРµР·Р°РїРёСЃСЊ С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹
 		ShaderProgram(const ShaderProgram& other) {}
 		ShaderProgram& operator=(const ShaderProgram& other) {}
 	public:
-		// Создание шейдерной программы
+		// РЎРѕР·РґР°РЅРёРµ С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹
 		ShaderProgram(Uint vertex_shader_id, Uint fragment_shader_id)
 		{
-			// vertex_shader_id	  - идентификатор вершинного шейдера
-			// fragment_shader_id - идентификатор фрагментного шейдера
+			// vertex_shader_id	  - РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РІРµСЂС€РёРЅРЅРѕРіРѕ С€РµР№РґРµСЂР°
+			// fragment_shader_id - РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„СЂР°РіРјРµРЅС‚РЅРѕРіРѕ С€РµР№РґРµСЂР°
 			id = glCreateProgram();
 			glAttachShader(id, vertex_shader_id);
 			glAttachShader(id, fragment_shader_id);
 		}
 
-		// Геттер идентификатора шейдерной программы
+		// Р“РµС‚С‚РµСЂ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР° С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹
 		Uint getID() const
 		{
 			return id;
 		}
 
-		// Линковка шейдеров
+		// Р›РёРЅРєРѕРІРєР° С€РµР№РґРµСЂРѕРІ
 		bool link(Char info_log[512])
 		{
-			// info_log - информация об ошибках линковки (так же возвращает статус линковки)
+			// info_log - РёРЅС„РѕСЂРјР°С†РёСЏ РѕР± РѕС€РёР±РєР°С… Р»РёРЅРєРѕРІРєРё (С‚Р°Рє Р¶Рµ РІРѕР·РІСЂР°С‰Р°РµС‚ СЃС‚Р°С‚СѓСЃ Р»РёРЅРєРѕРІРєРё)
 			glLinkProgram(id);
 			Int success = 0;
 			glGetProgramiv(id, GL_LINK_STATUS, &success);
@@ -118,97 +118,97 @@ namespace engine
 			return static_cast<bool>(success);
 		}
 
-		// Использование экземпляра шейдерной программы для следующего рендера
+		// РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹ РґР»СЏ СЃР»РµРґСѓСЋС‰РµРіРѕ СЂРµРЅРґРµСЂР°
 		void use() const
 		{
 			glUseProgram(id);
 		}
 
-		// Запись значения uniform-переменной
+		// Р—Р°РїРёСЃСЊ Р·РЅР°С‡РµРЅРёСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
 		void setUniform(std::string var_name, Float n) const
 		{
-			// var_name - имя uniform-переменной
-			// n		- записываемое значение
+			// var_name - РёРјСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
+			// n		- Р·Р°РїРёСЃС‹РІР°РµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ
 			Uint n_loc = glGetUniformLocation(id, var_name.c_str());
 			glUniform1f(n_loc, n);
 		}
 
-		// Запись значения uniform-переменной
+		// Р—Р°РїРёСЃСЊ Р·РЅР°С‡РµРЅРёСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
 		void setUniform(std::string var_name, Int n) const
 		{
-			// var_name - имя uniform-переменной
-			// n		- записываемое значение
+			// var_name - РёРјСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
+			// n		- Р·Р°РїРёСЃС‹РІР°РµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ
 			Uint n_loc = glGetUniformLocation(id, var_name.c_str());
 			glUniform1i(n_loc, n);
 		}
 
-		// Запись значения uniform-переменной
+		// Р—Р°РїРёСЃСЊ Р·РЅР°С‡РµРЅРёСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
 		void setUniform(std::string var_name, Vec4 v) const
 		{
-			// var_name - имя uniform-переменной
-			// v		- записываемое значение
+			// var_name - РёРјСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
+			// v		- Р·Р°РїРёСЃС‹РІР°РµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ
 			Uint v_loc = glGetUniformLocation(id, var_name.c_str());
 			Float v_ptr[4Ull];
 			ptr(v, v_ptr);
 			glUniform4fv(v_loc, 1, v_ptr);
 		}
 
-		// Запись значения uniform-переменной
+		// Р—Р°РїРёСЃСЊ Р·РЅР°С‡РµРЅРёСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
 		void setUniform(std::string var_name, Vec3 v) const
 		{
-			// var_name - имя uniform-переменной
-			// v		- записываемое значение
+			// var_name - РёРјСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
+			// v		- Р·Р°РїРёСЃС‹РІР°РµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ
 			Uint v_loc = glGetUniformLocation(id, var_name.c_str());
 			Float v_ptr[3Ull];
 			ptr(v, v_ptr);
 			glUniform3fv(v_loc, 1, v_ptr);
 		}
 
-		// Запись значения uniform-переменной
+		// Р—Р°РїРёСЃСЊ Р·РЅР°С‡РµРЅРёСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
 		void setUniform(std::string var_name, Vec2 v) const
 		{
-			// var_name - имя uniform-переменной
-			// v		- записываемое значение
+			// var_name - РёРјСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
+			// v		- Р·Р°РїРёСЃС‹РІР°РµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ
 			Uint v_loc = glGetUniformLocation(id, var_name.c_str());
 			Float v_ptr[2Ull];
 			ptr(v, v_ptr);
 			glUniform2fv(v_loc, 1, v_ptr);
 		}
 
-		// Запись значения uniform-переменной
+		// Р—Р°РїРёСЃСЊ Р·РЅР°С‡РµРЅРёСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
 		void setUniform(std::string var_name, Mat4 m) const
 		{
-			// var_name - имя uniform-переменной
-			// m		- записываемое значение
+			// var_name - РёРјСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
+			// m		- Р·Р°РїРёСЃС‹РІР°РµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ
 			Uint m_loc = glGetUniformLocation(id, var_name.c_str());
 			Float m_ptr[16Ull];
 			ptr(m, m_ptr);
 			glUniformMatrix4fv(m_loc, 1, GL_TRUE, m_ptr);
 		}
 
-		// Запись значения uniform-переменной
+		// Р—Р°РїРёСЃСЊ Р·РЅР°С‡РµРЅРёСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
 		void setUniform(std::string var_name, Mat3 m) const
 		{
-			// var_name - имя uniform-переменной
-			// m		- записываемое значение
+			// var_name - РёРјСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
+			// m		- Р·Р°РїРёСЃС‹РІР°РµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ
 			Uint m_loc = glGetUniformLocation(id, var_name.c_str());
 			Float m_ptr[9Ull];
 			ptr(m, m_ptr);
 			glUniformMatrix3fv(m_loc, 1, GL_TRUE, m_ptr);
 		}
 
-		// Запись значения uniform-переменной
+		// Р—Р°РїРёСЃСЊ Р·РЅР°С‡РµРЅРёСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
 		void setUniform(std::string var_name, Mat2 m) const
 		{
-			// var_name - имя uniform-переменной
-			// m		- записываемое значение
+			// var_name - РёРјСЏ uniform-РїРµСЂРµРјРµРЅРЅРѕР№
+			// m		- Р·Р°РїРёСЃС‹РІР°РµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ
 			Uint m_loc = glGetUniformLocation(id, var_name.c_str());
 			Float m_ptr[4Ull];
 			ptr(m, m_ptr);
 			glUniformMatrix2fv(m_loc, 1, GL_FALSE, m_ptr);
 		}
 
-		// Очистка шейдерной программы
+		// РћС‡РёСЃС‚РєР° С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹
 		void clear()
 		{
 			if (id != 0U)
@@ -218,7 +218,7 @@ namespace engine
 			}
 		}
 
-		// Уничтожение шейдерной программы
+		// РЈРЅРёС‡С‚РѕР¶РµРЅРёРµ С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹
 		~ShaderProgram()
 		{
 			clear();
