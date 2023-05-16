@@ -1,15 +1,15 @@
-#include "engine.hpp" // Включение всех заголовочных файлов
+#include "engine.hpp" // Р’РєР»СЋС‡РµРЅРёРµ РІСЃРµС… Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹С… С„Р°Р№Р»РѕРІ
 
-// Точка входа
+// РўРѕС‡РєР° РІС…РѕРґР°
 int main()
 {
-	// Инициализация GLFW c версией OpenGL 3.3 Core Profile
+	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ GLFW c РІРµСЂСЃРёРµР№ OpenGL 3.3 Core Profile
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	// Cоздание окна
+	// CРѕР·РґР°РЅРёРµ РѕРєРЅР°
 	GLFWwindow* window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, "Engine", nullptr, nullptr);
 	if (window == nullptr)
 	{
@@ -18,20 +18,20 @@ int main()
 		return -1;
 	}
 
-	// Создание контекста OpenGL для созданного окна
+	// РЎРѕР·РґР°РЅРёРµ РєРѕРЅС‚РµРєСЃС‚Р° OpenGL РґР»СЏ СЃРѕР·РґР°РЅРЅРѕРіРѕ РѕРєРЅР°
 	glfwMakeContextCurrent(window);
 
-	// Поиск и запись функций OpenGL 
+	// РџРѕРёСЃРє Рё Р·Р°РїРёСЃСЊ С„СѓРЅРєС†РёР№ OpenGL 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
 
-	// Скрытие курсора
+	// РЎРєСЂС‹С‚РёРµ РєСѓСЂСЃРѕСЂР°
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
-	// Создание общего вершинного шейдера
+	// РЎРѕР·РґР°РЅРёРµ РѕР±С‰РµРіРѕ РІРµСЂС€РёРЅРЅРѕРіРѕ С€РµР№РґРµСЂР°
 	engine::Shader general_vsh(GL_VERTEX_SHADER);
 	Chars general_vsh_source;
 	engine::loadShaderSource("shaders/general.vert", general_vsh_source);
@@ -43,7 +43,7 @@ int main()
 		return -1;
 	}
 
-	// Создание общего фрагментного шейдера
+	// РЎРѕР·РґР°РЅРёРµ РѕР±С‰РµРіРѕ С„СЂР°РіРјРµРЅС‚РЅРѕРіРѕ С€РµР№РґРµСЂР°
 	engine::Shader general_fsh(GL_FRAGMENT_SHADER);
 	Chars general_fsh_source;
 	engine::loadShaderSource("shaders/general.frag", general_fsh_source);
@@ -54,7 +54,7 @@ int main()
 		return -1;
 	}
 
-	// Создание общего вершинного шейдера
+	// РЎРѕР·РґР°РЅРёРµ РѕР±С‰РµРіРѕ РІРµСЂС€РёРЅРЅРѕРіРѕ С€РµР№РґРµСЂР°
 	engine::Shader light_vsh(GL_VERTEX_SHADER);
 	Chars light_vsh_source;
 	engine::loadShaderSource("shaders/light_source.vert", light_vsh_source);
@@ -65,7 +65,7 @@ int main()
 		return -1;
 	}
 
-	// Создание фрагментного шейдера рендера источника света
+	// РЎРѕР·РґР°РЅРёРµ С„СЂР°РіРјРµРЅС‚РЅРѕРіРѕ С€РµР№РґРµСЂР° СЂРµРЅРґРµСЂР° РёСЃС‚РѕС‡РЅРёРєР° СЃРІРµС‚Р°
 	engine::Shader light_fsh(GL_FRAGMENT_SHADER);
 	Chars light_fsh_source;
 	engine::loadShaderSource("shaders/light_source.frag", light_fsh_source);
@@ -76,13 +76,13 @@ int main()
 		return -1;
 	}
 
-	// Запись идентификаторов шейдеров 
+	// Р—Р°РїРёСЃСЊ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРІ С€РµР№РґРµСЂРѕРІ 
 	Uint general_vsh_id = general_vsh.getID();
 	Uint general_fsh_id = general_fsh.getID();
 	Uint light_vsh_id = light_vsh.getID();
 	Uint light_fsh_id = light_fsh.getID();
 
-	// Создание общей шейдерной программы
+	// РЎРѕР·РґР°РЅРёРµ РѕР±С‰РµР№ С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹
 	engine::ShaderProgram general_shp(general_vsh_id, general_fsh_id);
 	if (!general_shp.link(info_log))
 	{
@@ -90,7 +90,7 @@ int main()
 		return -1;
 	}
 
-	// Создание шейдерной программы для рендера источника света
+	// РЎРѕР·РґР°РЅРёРµ С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹ РґР»СЏ СЂРµРЅРґРµСЂР° РёСЃС‚РѕС‡РЅРёРєР° СЃРІРµС‚Р°
 	engine::ShaderProgram light_shp(light_vsh_id, light_fsh_id);
 	if (!light_shp.link(info_log))
 	{
@@ -98,77 +98,77 @@ int main()
 		return -1;
 	}
 
-	// Удаление шейдеров
+	// РЈРґР°Р»РµРЅРёРµ С€РµР№РґРµСЂРѕРІ
 	general_vsh.clear();
 	general_fsh.clear();
 	light_vsh.clear();
 	light_fsh.clear();
 
-	// Запись идентификатора шейдерных программ
+	// Р—Р°РїРёСЃСЊ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР° С€РµР№РґРµСЂРЅС‹С… РїСЂРѕРіСЂР°РјРј
 	Uint general_shp_id = general_shp.getID();
 	Uint light_shp_id = light_shp.getID();
 
-	// Установка вьюпорта на все окно
+	// РЈСЃС‚Р°РЅРѕРІРєР° РІСЊСЋРїРѕСЂС‚Р° РЅР° РІСЃРµ РѕРєРЅРѕ
 	glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
 
-	// Создание и загрузка модели "Самолет"
+	// РЎРѕР·РґР°РЅРёРµ Рё Р·Р°РіСЂСѓР·РєР° РјРѕРґРµР»Рё "РЎР°РјРѕР»РµС‚"
 	engine::Model plane;
 	plane.load("resources/models/plane.mdl", "resources/textures/plane.png");
 	plane.move(engine::Vec3(0.0f, -0.75f, 4.0f));
 
-	// Создание и загрузка модели "Куб"
+	// РЎРѕР·РґР°РЅРёРµ Рё Р·Р°РіСЂСѓР·РєР° РјРѕРґРµР»Рё "РљСѓР±"
 	engine::Model cube;
 	cube.load("resources/models/cube.mdl", "resources/textures/cube.png");
 	cube.move(engine::Vec3(0.0f, 0.0f, 4.0f));
 
-	// Cоздание и загрузка модели "Источник света"
+	// CРѕР·РґР°РЅРёРµ Рё Р·Р°РіСЂСѓР·РєР° РјРѕРґРµР»Рё "РСЃС‚РѕС‡РЅРёРє СЃРІРµС‚Р°"
 	engine::Model light_source;
 	light_source.load("resources/models/light_source.mdl", " ");
 	light_source.scale(engine::Vec3(0.025f));
 	light_source.move(engine::Vec3(1.0f, -1.0f, 4.0f));
 
-	// Параметры освещения
+	// РџР°СЂР°РјРµС‚СЂС‹ РѕСЃРІРµС‰РµРЅРёСЏ
 	general_shp.use();
 	general_shp.setUniform("light_color", engine::Vec3(1.0f, 1.0f, 1.0f));
 
-	// Создание объекта камеры
+	// РЎРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚Р° РєР°РјРµСЂС‹
 	engine::Camera* cam = engine::Camera::getInstance();
-	engine::Mat4 view, projection; // Создание матриц перехожа между системами координат
-	// Создание матрицы перспективной проекции
+	engine::Mat4 view, projection; // РЎРѕР·РґР°РЅРёРµ РјР°С‚СЂРёС† РїРµСЂРµС…РѕР¶Р° РјРµР¶РґСѓ СЃРёСЃС‚РµРјР°РјРё РєРѕРѕСЂРґРёРЅР°С‚
+	// РЎРѕР·РґР°РЅРёРµ РјР°С‚СЂРёС†С‹ РїРµСЂСЃРїРµРєС‚РёРІРЅРѕР№ РїСЂРѕРµРєС†РёРё
 	projection = engine::perspective(0.1f, 1000.0f, engine::rad(30.0f), WIN_WIDTH, WIN_HEIGHT);
 
-	glEnable(GL_DEPTH_TEST); // Включение теста глубины
+	glEnable(GL_DEPTH_TEST); // Р’РєР»СЋС‡РµРЅРёРµ С‚РµСЃС‚Р° РіР»СѓР±РёРЅС‹
 
-	// Итерационно-вычисляемые переменные
+	// РС‚РµСЂР°С†РёРѕРЅРЅРѕ-РІС‹С‡РёСЃР»СЏРµРјС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
 	engine::Counter t, u;
 	std::vector<Double> cursor_pos(2Ull);
 
-	// Шаги счетчиков
+	// РЁР°РіРё СЃС‡РµС‚С‡РёРєРѕРІ
 	u.astep = engine::Vec3(0.0f, engine::rad(0.025f), 0.0f);
 
-	// Установка позиции курсора в центре экрана
+	// РЈСЃС‚Р°РЅРѕРІРєР° РїРѕР·РёС†РёРё РєСѓСЂСЃРѕСЂР° РІ С†РµРЅС‚СЂРµ СЌРєСЂР°РЅР°
 	glfwSetCursorPos(window, WIN_WIDTH / 2.0, WIN_HEIGHT / 2.0);
 
-	// Цикл рендера (Пока открыто окно)
+	// Р¦РёРєР» СЂРµРЅРґРµСЂР° (РџРѕРєР° РѕС‚РєСЂС‹С‚Рѕ РѕРєРЅРѕ)
 	while (!glfwWindowShouldClose(window))
 	{
-		// Получение позиции курсора мыши
+		// РџРѕР»СѓС‡РµРЅРёРµ РїРѕР·РёС†РёРё РєСѓСЂСЃРѕСЂР° РјС‹С€Рё
 		glfwGetCursorPos(window, &cursor_pos[0], &cursor_pos[1]);
 
-		// Обработка событий
+		// РћР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёР№
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-			glfwSetWindowShouldClose(window, true); // Нажатие Escape - закрытие окна
+			glfwSetWindowShouldClose(window, true); // РќР°Р¶Р°С‚РёРµ Escape - Р·Р°РєСЂС‹С‚РёРµ РѕРєРЅР°
 
-		// Очистка буфера кадра (цвет и глубина)
+		// РћС‡РёСЃС‚РєР° Р±СѓС„РµСЂР° РєР°РґСЂР° (С†РІРµС‚ Рё РіР»СѓР±РёРЅР°)
 		glClearColor(0.15f, 0.15f, 0.16f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Перемещение камеры
+		// РџРµСЂРµРјРµС‰РµРЅРёРµ РєР°РјРµСЂС‹
 		t.astep = { static_cast<Float>(WIN_WIDTH / 2.0 - cursor_pos[0]), static_cast<Float>(WIN_HEIGHT / 2.0 - cursor_pos[1]), 0.0f };
 		engine::flyCamera(window, t.angle);
 		view = cam->view();
 
-		// Запись матриц view и projection в шейдерные программы
+		// Р—Р°РїРёСЃСЊ РјР°С‚СЂРёС† view Рё projection РІ С€РµР№РґРµСЂРЅС‹Рµ РїСЂРѕРіСЂР°РјРјС‹
 		general_shp.use();
 		general_shp.setUniform("view", view);
 		general_shp.setUniform("projection", projection);
@@ -176,32 +176,32 @@ int main()
 		light_shp.setUniform("view", view);
 		light_shp.setUniform("projection", projection);
 
-		// Трансормации над моделью "Самолет"
+		// РўСЂР°РЅСЃРѕСЂРјР°С†РёРё РЅР°Рґ РјРѕРґРµР»СЊСЋ "РЎР°РјРѕР»РµС‚"
 		plane.rotate(u.angle);
 		plane.transform(engine::Vec3(1.0f, 2.0f, 3.0f));
-		plane.draw(general_shp); // Рендер "Самолета"
+		plane.draw(general_shp); // Р РµРЅРґРµСЂ "РЎР°РјРѕР»РµС‚Р°"
 
-		// Трансформации над моделью "Куб"
+		// РўСЂР°РЅСЃС„РѕСЂРјР°С†РёРё РЅР°Рґ РјРѕРґРµР»СЊСЋ "РљСѓР±"
 		cube.transform(engine::Vec3(1.0f, 2.0f, 3.0f));
-		cube.draw(general_shp); // Рендер "Куба"
+		cube.draw(general_shp); // Р РµРЅРґРµСЂ "РљСѓР±Р°"
 
-		// Трансформации над моделью "Источник света"
+		// РўСЂР°РЅСЃС„РѕСЂРјР°С†РёРё РЅР°Рґ РјРѕРґРµР»СЊСЋ "РСЃС‚РѕС‡РЅРёРє СЃРІРµС‚Р°"
 		light_source.transform(engine::Vec3(1.0f, 2.0f, 3.0f));
-		light_source.draw(light_shp); // Рендер "Источника света"
+		light_source.draw(light_shp); // Р РµРЅРґРµСЂ "РСЃС‚РѕС‡РЅРёРєР° СЃРІРµС‚Р°"
 
-		// Замена буфера кудра и загрузка событий
+		// Р—Р°РјРµРЅР° Р±СѓС„РµСЂР° РєСѓРґСЂР° Рё Р·Р°РіСЂСѓР·РєР° СЃРѕР±С‹С‚РёР№
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
-		if(t.i % 2 == 0) // Раз в 2 кадра перемещение курсора на середину экрана
+		if(t.i % 2 == 0) // Р Р°Р· РІ 2 РєР°РґСЂР° РїРµСЂРµРјРµС‰РµРЅРёРµ РєСѓСЂСЃРѕСЂР° РЅР° СЃРµСЂРµРґРёРЅСѓ СЌРєСЂР°РЅР°
 			glfwSetCursorPos(window, WIN_WIDTH / 2.0, WIN_HEIGHT / 2.0);
 
-		// Увеличение счетчиков
+		// РЈРІРµР»РёС‡РµРЅРёРµ СЃС‡РµС‚С‡РёРєРѕРІ
 		t++; 
 		u++;
 	}
 
-	// Завершение работы
+	// Р—Р°РІРµСЂС€РµРЅРёРµ СЂР°Р±РѕС‚С‹
 	glfwTerminate();
 	return 0;
 }
