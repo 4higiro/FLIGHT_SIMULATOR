@@ -5,9 +5,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 // Включение библиотек
-#include <glad/glad.h>		// Поиск адресов хранения функций OpenGL
-#include <GLFW/glfw3.h>		// Фреймворк для работы с OpenGL
-#include <stb/stb_image.h>	// Загрузка изображений
+#include <glad/glad.h>			// Поиск адресов хранения функций OpenGL
+#include <GLFW/glfw3.h>			// Фреймворк для работы с OpenGL
+#include <stb/stb_image.h>		// Загрузка изображений
+#include <assimp/Importer.hpp>	// Импорт 3д-моделей
+#include <assimp/scene.h>		// Импорт 3д-моделей
+#include <assimp/postprocess.h>	// Импорт 3д-моделей
 
 #include <iostream>			// Ввод-вывод
 #include <fstream>			// Работа с файлами
@@ -53,17 +56,17 @@ namespace engine
 
 		// Перемещение камеры (Управление: A(влево) S(вправо) D(назад) W(вперед) Q(вверх) E(вниз))
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-			cam->move(Vec3(cam->direction().x * (-0.001f), 0.0f, cam->direction().z * (-0.001f)));
+			cam->move(Vec3(cam->direction().x * (-0.002f), 0.0f, cam->direction().z * (-0.002f)));
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-			cam->move(Vec3(cam->direction().x * 0.001f, 0.0f, cam->direction().z * 0.001f));
+			cam->move(Vec3(cam->direction().x * 0.002f, 0.0f, cam->direction().z * 0.002f));
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-			cam->move(Vec3(cam->right().x * (-0.001f), 0.0f, cam->right().z * (-0.001f)));
+			cam->move(Vec3(cam->right().x * (-0.002f), 0.0f, cam->right().z * (-0.002f)));
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-			cam->move(Vec3(cam->right().x * 0.001f, 0.0f, cam->right().z * 0.001f));
+			cam->move(Vec3(cam->right().x * 0.002f, 0.0f, cam->right().z * 0.002f));
 		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-			cam->move(Vec3(0.0f, 0.001f, 0.0f));
+			cam->move(Vec3(0.0f, 0.002f, 0.0f));
 		if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-			cam->move(Vec3(0.0f, -0.001f, 0.0f));
+			cam->move(Vec3(0.0f, -0.002f, 0.0f));
 
 		// Поворот камеры
 		cam->rotate(Vec3(rad(-angle.y) / 15.0f, rad(angle.x) / 15.0f, rad(angle.z) / 15.0f));
