@@ -1,27 +1,27 @@
-#ifndef LOADER // Защита от повторного включения
+#ifndef LOADER // Р—Р°С‰РёС‚Р° РѕС‚ РїРѕРІС‚РѕСЂРЅРѕРіРѕ РІРєР»СЋС‡РµРЅРёСЏ
 #define LOADER
 
-#include "engine.hpp" // Включение всех заголовочных файлов
+#include "engine.hpp" // Р’РєР»СЋС‡РµРЅРёРµ РІСЃРµС… Р·Р°РіРѕР»РѕРІРѕС‡РЅС‹С… С„Р°Р№Р»РѕРІ
 
-// engine - пространство имен проекта
+// engine - РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ РїСЂРѕРµРєС‚Р°
 
 namespace engine
 {
-    // Класс загрузки модели
+    // РљР»Р°СЃСЃ Р·Р°РіСЂСѓР·РєРё РјРѕРґРµР»Рё
     class ModelLoader
     {
     private:
-        // Извлечение данных о меше из структур данных assimp
+        // РР·РІР»РµС‡РµРЅРёРµ РґР°РЅРЅС‹С… Рѕ РјРµС€Рµ РёР· СЃС‚СЂСѓРєС‚СѓСЂ РґР°РЅРЅС‹С… assimp
         static void processMesh(aiMesh* mesh, const aiScene* scene, Mesh* output)
         {
-            // mesh     - Меш из assimp
-            // scene    - Сцена текущего меша
-            // output   - Меш проекта
+            // mesh     - РњРµС€ РёР· assimp
+            // scene    - РЎС†РµРЅР° С‚РµРєСѓС‰РµРіРѕ РјРµС€Р°
+            // output   - РњРµС€ РїСЂРѕРµРєС‚Р°
 
-            std::vector<Vertex> vertices;   // Извлеченные вершины
-            std::vector<Uint> indices;      // Извлеченные индексы
+            std::vector<Vertex> vertices;   // РР·РІР»РµС‡РµРЅРЅС‹Рµ РІРµСЂС€РёРЅС‹
+            std::vector<Uint> indices;      // РР·РІР»РµС‡РµРЅРЅС‹Рµ РёРЅРґРµРєСЃС‹
 
-            // Обработка координат вершин, нормалей, цвета и текстурных координат
+            // РћР±СЂР°Р±РѕС‚РєР° РєРѕРѕСЂРґРёРЅР°С‚ РІРµСЂС€РёРЅ, РЅРѕСЂРјР°Р»РµР№, С†РІРµС‚Р° Рё С‚РµРєСЃС‚СѓСЂРЅС‹С… РєРѕРѕСЂРґРёРЅР°С‚
             for (Size i = 0Ull; i < mesh->mNumVertices; i++)
             {
                 Vertex vertex;
@@ -43,7 +43,7 @@ namespace engine
                 vertices.push_back(vertex);
             }
 
-            // Обработка индексов
+            // РћР±СЂР°Р±РѕС‚РєР° РёРЅРґРµРєСЃРѕРІ
             for (Size i = 0Ull; i < mesh->mNumFaces; i++)
             {
                 aiFace face = mesh->mFaces[i];
@@ -51,24 +51,24 @@ namespace engine
                     indices.push_back(face.mIndices[j]);
             }
 
-            // Обработка материала
+            // РћР±СЂР°Р±РѕС‚РєР° РјР°С‚РµСЂРёР°Р»Р°
             if (mesh->mMaterialIndex >= 0)
             {
 
             }
 
-            // Заполнение меша извлеченными данными
+            // Р—Р°РїРѕР»РЅРµРЅРёРµ РјРµС€Р° РёР·РІР»РµС‡РµРЅРЅС‹РјРё РґР°РЅРЅС‹РјРё
             output->set(vertices, indices);
         }
 
-        // Извлечение мешей из узла сцены
+        // РР·РІР»РµС‡РµРЅРёРµ РјРµС€РµР№ РёР· СѓР·Р»Р° СЃС†РµРЅС‹
         static void processNode(aiNode* node, const aiScene* scene, std::vector<Mesh*>& meshes)
         {
-            // node     - текущий узел сцены 
-            // scene    - сцена 
-            // meshes   - результирующий массив мешей
+            // node     - С‚РµРєСѓС‰РёР№ СѓР·РµР» СЃС†РµРЅС‹ 
+            // scene    - СЃС†РµРЅР° 
+            // meshes   - СЂРµР·СѓР»СЊС‚РёСЂСѓСЋС‰РёР№ РјР°СЃСЃРёРІ РјРµС€РµР№
 
-            // Обработка всех мешей (если они есть) у выбранного узла
+            // РћР±СЂР°Р±РѕС‚РєР° РІСЃРµС… РјРµС€РµР№ (РµСЃР»Рё РѕРЅРё РµСЃС‚СЊ) Сѓ РІС‹Р±СЂР°РЅРЅРѕРіРѕ СѓР·Р»Р°
             for (unsigned int i = 0; i < node->mNumMeshes; i++)
             {
                 aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -76,12 +76,12 @@ namespace engine
                 processMesh(mesh, scene, instance);
                 meshes.push_back(instance);
             }
-            // То же самое для всех дочерних узлов
+            // РўРѕ Р¶Рµ СЃР°РјРѕРµ РґР»СЏ РІСЃРµС… РґРѕС‡РµСЂРЅРёС… СѓР·Р»РѕРІ
             for (unsigned int i = 0; i < node->mNumChildren; i++)
                 processNode(node->mChildren[i], scene, meshes);
         }
 
-        // Загрузка модели из файла в структуры assimp
+        // Р—Р°РіСЂСѓР·РєР° РјРѕРґРµР»Рё РёР· С„Р°Р№Р»Р° РІ СЃС‚СЂСѓРєС‚СѓСЂС‹ assimp
         static void loadModel(std::string path, std::vector<Mesh*>& meshes)
         {
             Assimp::Importer importer;
@@ -96,14 +96,14 @@ namespace engine
             processNode(scene->mRootNode, scene, meshes);
         }
     public:
-        // Загрузка из файла и создание модели экземпляра
+        // Р—Р°РіСЂСѓР·РєР° РёР· С„Р°Р№Р»Р° Рё СЃРѕР·РґР°РЅРёРµ РјРѕРґРµР»Рё СЌРєР·РµРјРїР»СЏСЂР°
         static Model& loadFromFile(std::string path)
         {
-            // path - путь к файлу модели
-            std::vector<Mesh*> meshes;          // Массив мешей
-            loadModel(path, meshes);            // Загрузка всех мешей
-            Model* result = new Model(meshes);  // Создание экземпляра модели
-            return *result;                     // Возврат собранной модели
+            // path - РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ РјРѕРґРµР»Рё
+            std::vector<Mesh*> meshes;          // РњР°СЃСЃРёРІ РјРµС€РµР№
+            loadModel(path, meshes);            // Р—Р°РіСЂСѓР·РєР° РІСЃРµС… РјРµС€РµР№
+            Model* result = new Model(meshes);  // РЎРѕР·РґР°РЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° РјРѕРґРµР»Рё
+            return *result;                     // Р’РѕР·РІСЂР°С‚ СЃРѕР±СЂР°РЅРЅРѕР№ РјРѕРґРµР»Рё
         }
     };
 }
