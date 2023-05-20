@@ -111,37 +111,8 @@ int main()
 	// Установка вьюпорта на все окно
 	glViewport(0, 0, WIN_WIDTH, WIN_HEIGHT);
 
-	/*
-	// Создание и загрузка модели "Самолет"
-	engine::Mesh plane_mesh;
-	plane_mesh.load("resources/models/plane.mdl", "resources/textures/plane.png");
-	std::vector<engine::Mesh*> plane_meshes;
-	plane_meshes.push_back(&plane_mesh);
-	engine::Model plane(plane_meshes);
-	plane.move(engine::Vec3(0.0f, -0.75f, 4.0f));
-
-	// Создание и загрузка модели "Куб"
-	engine::Mesh cube_mesh;
-	cube_mesh.load("resources/models/cube.mdl", "resources/textures/cube.png");
-	std::vector<engine::Mesh*> cube_meshes;
-	cube_meshes.push_back(&cube_mesh);
-	engine::Model cube(cube_meshes);
-	cube.move(engine::Vec3(0.0f, 0.0f, 4.0f));
-
-	// Cоздание и загрузка модели "Источник света"
-	engine::Mesh light_source_mesh;
-	light_source_mesh.load("resources/models/light_source.mdl", " ");
-	std::vector<engine::Mesh*> light_source_meshes;
-	light_source_meshes.push_back(&light_source_mesh);
-	engine::Model light_source(light_source_meshes);
-	light_source.scale(engine::Vec3(0.25f));
-	light_source.move(engine::Vec3(1.0f, -1.0f, 4.0f));
-	*/
-
-	std::string path = "resources/models/sphere/sphere.obj";
-	std::vector<engine::Mesh*> meshes;
-	engine::loadModel(path, meshes);
-	engine::Model sphere(meshes);
+	// Создание модели "Сфера"
+	engine::Model sphere = engine::ModelLoader::loadFromFile("resources/models/sphere/sphere.obj");
 	sphere.scale(engine::Vec3(0.25f));
 	sphere.move(engine::Vec3(0.0f, 0.0f, 2.0f));
 	sphere.transform(engine::Vec3(1.0f, 2.0f, 3.0f));
@@ -195,21 +166,7 @@ int main()
 		light_shp.setUniform("view", view);
 		light_shp.setUniform("projection", projection);
 
-		/*
-		// Трансормации над моделью "Самолет"
-		plane.rotate(u.angle);
-		plane.transform(engine::Vec3(1.0f, 2.0f, 3.0f));
-		plane.draw(general_shp); // Рендер "Самолета"
-
-		// Трансформации над моделью "Куб"
-		cube.transform(engine::Vec3(1.0f, 2.0f, 3.0f));
-		cube.draw(general_shp); // Рендер "Куба"
-
-		// Трансформации над моделью "Источник света"
-		light_source.transform(engine::Vec3(1.0f, 2.0f, 3.0f));
-		light_source.draw(light_shp); // Рендер "Источника света"
-		*/
-
+		// Рендер модели "Сфера"
 		sphere.draw(general_shp);
 
 		// Замена буфера кудра и загрузка событий

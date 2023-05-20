@@ -40,8 +40,8 @@ typedef unsigned char* Uchars;
 #include "buffer_objects.hpp"		// Работа с буферными объектами
 #include "texture.hpp"				// Работа с текстурами
 #include "mesh.hpp"					// Работа с мешами
-#include "loader.hpp"				// Загрузка мешей
 #include "model.hpp"				// Работа с трехмерными моделями
+#include "loader.hpp"				// Загрузка моделей
 
 // engine - пространство имен проекта
 

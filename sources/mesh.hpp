@@ -228,7 +228,7 @@ namespace engine
 		}
 
 		// Рендер всех вершин и загрузка матрицы меша
-		void draw(const ShaderProgram& program, const Mat4 model_matrix) const
+		void draw(const ShaderProgram& program, const Mat4 model_matrix = Mat4()) const
 		{
 			// program - рисующая шейдерная программа
 			arr.bind();
