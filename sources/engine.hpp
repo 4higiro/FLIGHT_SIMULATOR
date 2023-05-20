@@ -9,8 +9,8 @@
 #include <GLFW/glfw3.h>			// Фреймворк для работы с OpenGL
 #include <stb/stb_image.h>		// Загрузка изображений
 #include <assimp/Importer.hpp>	// Импорт 3д-моделей
-#include <assimp/scene.h>		// Импорт 3д-моделей
-#include <assimp/postprocess.h>	// Импорт 3д-моделей
+#include <assimp/scene.h>		// Импорт объекта сцены
+#include <assimp/postprocess.h>	// Обработка объектов
 
 #include <iostream>			// Ввод-вывод
 #include <fstream>			// Работа с файлами
@@ -39,6 +39,8 @@ typedef unsigned char* Uchars;
 #include "shaders.hpp"				// Работа с шейдерами и шейдерной программой
 #include "buffer_objects.hpp"		// Работа с буферными объектами
 #include "texture.hpp"				// Работа с текстурами
+#include "mesh.hpp"					// Работа с мешами
+#include "loader.hpp"				// Загрузка мешей
 #include "model.hpp"				// Работа с трехмерными моделями
 
 // engine - пространство имен проекта

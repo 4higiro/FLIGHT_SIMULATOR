@@ -17,7 +17,7 @@ namespace engine
 		VBO(const VBO& other) {}
 		VBO& operator=(const VBO& other) {}
 
-		friend class Model; // Закрытые поля и методы доступны в классе Model
+		friend class Mesh; // Закрытые поля и методы доступны в классе Mesh
 	public:
 		// Отвязка буфера в контексте OpenGL
 		static void resetBind()
@@ -79,7 +79,7 @@ namespace engine
 		EBO(const VBO& other) {}
 		EBO& operator=(const VBO& other) {}
 
-		friend class Model; // Закрытые поля и методы доступны в классе Model
+		friend class Mesh; // Закрытые поля и методы доступны в классе Mesh
 	public:
 		// Отвязка буфера в контексте OpenGL
 		static void resetBind()
@@ -150,7 +150,7 @@ namespace engine
 		VAO(const VAO& other) {}
 		VAO& operator=(const VAO& other) {}
 
-		friend class Model; // Закрытые поля и методы доступны в классе Model
+		friend class Mesh; // Закрытые поля и методы доступны в классе Mesh
 	public:
 		// Отвязка массива от контекста OpenGL
 		static void resetBind()

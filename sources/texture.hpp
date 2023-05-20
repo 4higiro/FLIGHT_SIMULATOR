@@ -17,7 +17,7 @@ namespace engine
 		Texture2D(const Texture2D& other) {}
 		Texture2D& operator=(const Texture2D& other) {}
 
-		friend class Model; // Закрытые поля и методы доступны в классе Model
+		friend class Mesh; // Закрытые поля и методы доступны в классе Mesh
 	public:
 		// Отвязка текстуры от контекста OpenGL
 		static void resetBind()
@@ -55,7 +55,7 @@ namespace engine
 		}
 
 		// Загрузка текстуры из файла
-		void load(std::string path)
+		void loadFromFile(std::string path)
 		{
 			// path - путь к текстуре
 			Int texture_width, texture_height, texture_channels;
