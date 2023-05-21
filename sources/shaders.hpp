@@ -8,7 +8,7 @@
 namespace engine
 {
 	// Загрузка исходного кода шейдеров из файла
-	void loadShaderSource(std::string path, char*& shader_source)
+	void loadShaderSource(std::string path, Chars& shader_source)
 	{
 		// path			 - путь к файлу с исходным кодом
 		// shader_source - адрес записи исходного кода
@@ -19,8 +19,11 @@ namespace engine
 			input_source += fin.get();
 		input_source.pop_back();
 		input_source.push_back('\0');
-		shader_source = (char*)input_source.c_str();
 		fin.close();
+		shader_source = new Char[input_source.length() + 1];
+		for (Size i = 0; i < input_source.length(); i++)
+			shader_source[i] = input_source[i];
+		shader_source[input_source.length()] = '\0';
 	}
 
 	// Класс Шейдера
@@ -46,7 +49,7 @@ namespace engine
 		}
 
 		// Запись исходного кода шейдера
-		void changeSource(const char* source)
+		void changeSource(const Chars source)
 		{
 			glShaderSource(id, 1, &source, NULL);
 		}

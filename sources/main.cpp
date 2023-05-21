@@ -36,6 +36,7 @@ int main()
 	Chars general_vsh_source;
 	engine::loadShaderSource("shaders/general.vert", general_vsh_source);
 	general_vsh.changeSource(general_vsh_source);
+	delete[] general_vsh_source;
 	Char info_log[512];
 	if (!general_vsh.compile(info_log))
 	{
@@ -48,17 +49,19 @@ int main()
 	Chars general_fsh_source;
 	engine::loadShaderSource("shaders/general.frag", general_fsh_source);
 	general_fsh.changeSource(general_fsh_source);
+	delete[] general_fsh_source;
 	if (!general_fsh.compile(info_log))
 	{
 		std::cout << "ERROR COMPILE GENERAL FRAGMENT SHADER:" << std::endl << info_log << std::endl;
 		return -1;
 	}
 
-	// Создание общего вершинного шейдера
+	// Создание вершинного шейдера рендера источника света
 	engine::Shader light_vsh(GL_VERTEX_SHADER);
 	Chars light_vsh_source;
 	engine::loadShaderSource("shaders/light_source.vert", light_vsh_source);
 	light_vsh.changeSource(light_vsh_source);
+	delete[] light_vsh_source;
 	if (!light_vsh.compile(info_log))
 	{
 		std::cout << "ERROR COMPILE GENERAL VERTEX SHADER:" << std::endl << info_log << std::endl;
@@ -70,6 +73,7 @@ int main()
 	Chars light_fsh_source;
 	engine::loadShaderSource("shaders/light_source.frag", light_fsh_source);
 	light_fsh.changeSource(light_fsh_source);
+	delete[] light_fsh_source;
 	if (!light_fsh.compile(info_log))
 	{
 		std::cout << "ERROR COMPILE LIGHT FRAGMENT SHADER:" << std::endl << info_log << std::endl;
@@ -114,18 +118,25 @@ int main()
 	// Создание модели "Сфера"
 	engine::Model sphere = engine::ModelLoader::loadFromFile("resources/models/sphere/sphere.obj");
 	sphere.scale(engine::Vec3(0.25f));
-	sphere.move(engine::Vec3(0.0f, 0.0f, 2.0f));
+	sphere.move(engine::Vec3(-1.0f, -0.7f, 2.0f));
 	sphere.transform(engine::Vec3(1.0f, 2.0f, 3.0f));
 
-	// Параметры освещения
-	general_shp.use();
-	general_shp.setUniform("light_color", engine::Vec3(1.0f, 1.0f, 1.0f));
+	// Создание модели "Куб"
+	engine::Model cube = engine::ModelLoader::loadFromFile("resources/models/cube/cube.obj");
+	cube.move(engine::Vec3(0.5f, 1.5f, 4.0f));
+	cube.transform(engine::Vec3(1.0f, 2.0f, 3.0f));
 
 	// Создание объекта камеры
 	engine::Camera* cam = engine::Camera::getInstance();
 	engine::Mat4 view, projection; // Создание матриц перехожа между системами координат
 	// Создание матрицы перспективной проекции
 	projection = engine::perspective(0.1f, 1000.0f, engine::rad(30.0f), WIN_WIDTH, WIN_HEIGHT);
+
+	// Параметры освещения
+	general_shp.use();
+	general_shp.setUniform("light_color", engine::Vec3(1.0f, 1.0f, 1.0f));
+	general_shp.setUniform("light_position", engine::Vec3(1.0f, 0.7f, -2.0f));
+	general_shp.setUniform("view_position", engine::Vec3(0.0f) - cam->position());
 
 	glEnable(GL_DEPTH_TEST); // Включение теста глубины
 
@@ -166,8 +177,14 @@ int main()
 		light_shp.setUniform("view", view);
 		light_shp.setUniform("projection", projection);
 
-		// Рендер модели "Сфера"
-		sphere.draw(general_shp);
+		general_shp.use();
+		general_shp.setUniform("view_position", engine::Vec3(0.0f) - cam->position());
+
+		// Рендер модели "Сфера" (источник света)
+		sphere.draw(light_shp);
+
+		// Рендер модели "Куб"
+		cube.draw(general_shp);
 
 		// Замена буфера кудра и загрузка событий
 		glfwSwapBuffers(window);
